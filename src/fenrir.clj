@@ -49,8 +49,8 @@
   (with-meta {:name `fObject, :slots [], :base-map {}} {:type `fClass}))
 
 (defn- make-class "Creates an fclass meta-object."
-  [name slots virtual-slots base-map abstract?]
-  (assoc fClass :name name, :slots slots, :virtual-slots virtual-slots, :base-map base-map, :abstract? abstract?))
+  [name slots virtual-slots base-map]
+  (assoc fClass :name name, :slots slots, :virtual-slots virtual-slots, :base-map base-map))
 
 (defn- get-super-slots "Returns the slots from the given superclasses and their own superclasses."
   [supers]
@@ -118,14 +118,9 @@
         ; Create all the meta-object data.
         class-sym (add-ns sym)
         base-map (apply hash-map (interleave (map keyword all-slots) (repeat nil)))
-        abstract? (any? #(and (= 2 (count %))
-                              (not (or (= 'get (first %))
-                                       (= 'set (first %)))))
-                        meths)
-        meta-obj (make-class class-sym slots vslots base-map abstract?)
+        meta-obj (make-class class-sym slots vslots base-map)
         ; Create documentation
         fdoc (str "Fenrir Class Name: " class-sym "\n"
-                  "Abstract? " abstract? "\n"
                   "Slots: " slots "\n"
                   "Virtual Slots: " vslots)
         doc-str (if doc-str (str fdoc "\n\n" doc-str) fdoc)
@@ -142,10 +137,12 @@
              ; Abstract fns.
              (< (count m) 3) `(do (defmulti ~@(identity m) fenrir-dispatch)
                                 (defmethod ~(first m) '~class-sym [o# & args#]
-                                  (throw (Exception. ~(str "Unimplemented method in class " ~class-sym ".")))))
+                                  (throw (Exception. ~(str "Unimplemented method in class " class-sym ".")))))
              ; Multimethod implementation.
              :else (if (multi? (first m))
-                     `(defmethod ~(first m) '~class-sym ~(vec (cons '*self* (second m))) ~@(recreplace susts (nthnext m 2)))
+                     (if (= 'ctor (first m)) ; Handle constructors.
+                       `(defmethod ~(first m) '~class-sym ~(vec (cons '*fclass* (second m))) ~@(nthnext m 2))
+                       `(defmethod ~(first m) '~class-sym ~(vec (cons '*self* (second m))) ~@(recreplace susts (nthnext m 2))))
                      (let [[m-sym & others] m
                            doc-str (if (string? (first others)) (first others) "")
                            [argsv & forms] (if (string? (first others)) (rest others) others)]
@@ -156,36 +153,36 @@
            `(defmethod ~(second m) '~class-sym [o# args#] (apply call-base ~(second m) '~(nth m 2) o# args#)))
        ; Implement accessors/getters
        (defmethod get-slot '~class-sym [~'*self* ~'*slot-key*]
-         (case ~'*slot-key*
+         (condp = ~'*slot-key*
            ~@(reduce concat (for [g gets] [(keyword (second g))
                                            (if (first (nnext g)) (recreplace susts (nth g 2)) nil)]))
-           ; Slot masks & virtual slots.
+           ; Slot masks.
            ~@(reduce concat (for [m slot-masks] [(keyword (second m))
-                                                 `(call-base get-slot '~(nth m 2) ~'*self* ~'*slot-key*)]))
+                                                 `(call-base get-slot ~(nth m 2) ~'*self* ~'*slot-key*)]))
            ; Inherited slot redirection.
            ~@(reduce concat (for [is inherited-slots,
                                   s (difference (second is) (apply hash-set slots))]
-                              [(keyword s) `(call-base get-slot '~(first is) ~'*self* ~'*slot-key*)]))
+                              [(keyword s) `(call-base get-slot ~(first is) ~'*self* ~'*slot-key*)]))
            ; Inherited virtual slots.
            ~@(reduce concat (for [iv inherited-vslots
                                   s (difference (second iv) (apply hash-set vslots))]
-                              [(keyword s) `(call-base get-slot '~(first iv) ~'*self* ~'*slot-key*)]))
+                              [(keyword s) `(call-base get-slot ~(first iv) ~'*self* ~'*slot-key*)]))
            ; Default case.
            (~'*self* ~'*slot-key*)))
        ; Implement mutators/setters
        (defmethod set-slot '~class-sym
          ([~'*self* ~'*slot-key* ~'*val*]
-          (case ~'*slot-key*
+          (condp = ~'*slot-key*
             ; Mutators/setters.
             ~@(reduce concat (for [s sets] [(keyword (second s))
                                             `(assoc ~'*self* ~(keyword (second s)) ~(if (first (nnext s)) (recreplace susts (nth s 2)) nil))]))
             ; Slot masks.
             ~@(reduce concat (for [m slot-masks] [(keyword (second m))
-                                                  `(call-base get-slot '~(nth m 2) ~'*self* ~'*slot-key* ~'*val*)]))
+                                                  `(call-base set-slot ~(nth m 2) ~'*self* ~'*slot-key* ~'*val*)]))
             ; Inherited slot redirection.
             ~@(reduce concat (for [is inherited-slots,
                                   s (difference (second is) (apply hash-set slots))]
-                              [(keyword s) `(call-base set-slot '~(first is) ~'*self* ~'*slot-key* ~'*val*)]))
+                              [(keyword s) `(call-base set-slot ~(first is) ~'*self* ~'*slot-key* ~'*val*)]))
             ; Virtual slots.
             ~@(reduce concat (for [v vslots] [(keyword v) '*self*]))
             ; Inherited virtual slots.
@@ -197,6 +194,7 @@
             ))
          ([~'*self* ~'*slot-key* ~'*val* & kvs#]
           (apply set-slot (set-slot ~'*self* ~'*slot-key* ~'*val*) kvs#)))
+       nil
        )))
 
 ; Object-handling fns
@@ -208,13 +206,11 @@
 It can be extended to provide custom constructors."
   fenrir-class-dispatch)
 (defmethod ctor `fObject [fclass & kvals]
-  (if (:abstract? fclass)
-    (throw (Exception. "Abstract classes cannot be instantiated."))
-    (with-meta
-      (if (empty? kvals)
-        (:base-map fclass)
-        (apply assoc (:base-map fclass) kvals))
-      {:type (:name fclass)})))
+  (with-meta
+    (if (empty? kvals)
+      (:base-map fclass)
+      (apply assoc (:base-map fclass) kvals))
+    {:type (:name fclass)}))
 
 (defmulti get-slot
   "A fn for getting a slot in an fobject.
