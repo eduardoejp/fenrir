@@ -58,10 +58,8 @@ Before I explain each feature, please evaluate the following sexps:
 	(get-slot cir :area)
 	(get-slot cir :perimeter)
 
-1. Slots in Fenrir can come in two forms: Normal Slots & Virtual Slots
-
+1. Slots in Fenrir can come in two forms.
 *Normal Slots*: These are instance variables in your object. They can be called by name inside method definitions and inside getters, setters and virtual slot definitions.
-
 *Virtual Slots*: These can be accessed like every other slot by outside users (although they cannot be called by name inside definitions). If someone tries to set them
   to a value through set-slot, they won't be able to and set-slot will return the original object. Accessing them through get-slot will result in the forms being
   evaluated and returning a value.
