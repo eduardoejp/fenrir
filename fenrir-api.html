@@ -1,0 +1,218 @@
+<html>
+  <head>
+    <title>fenrir - fenrir nil API documentation</title>
+    <link href="static/favicon.png" rel="icon" />
+    <link href="static/favicon.png" rel="shortcut icon" />
+    <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
+    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
+    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
+    <script src="file/view/clojure.js" type="text/javascript"></script>
+    <style>.menuWrapper{height: 36px;}</style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
+    <![endif]-->
+  </head>
+<!--
+This document was auto-generated from the source by the clojure autodoc system.
+To report errors or ask questions about the overall documentation structure, formatting,
+etc., contact Tom Faulhaber (google mail name: tomfaulhaber).
+For errors in the documentation of a particular namespace, contact the author of that
+namespace.
+-->
+  <body>
+    <div id="AllContentContainer">
+      <div id="Header">
+	<a id="Logo" href="index.html"><img alt="Clojure" height="100" width="100" src="static/clojure-icon.gif" /></a>
+	<h1><a title="page header title" id="page-header" href="index.html">fenrir</a></h1>
+      </div>
+      <div id="leftcolumn"><div style="text-align: center;"></div>
+<div class="menu">
+  <div class="WikiCustomNav WikiElement wiki">
+    <span class="toc-header"><span id="project-name">fenrir</span> <span id="version"></span> API</span><br />
+    <ul>
+      <li><a class="wiki_link" href="index.html">Overview</a></li>
+      <li><a class="wiki_link" href="api-index.html">API Index</a></li>
+    </ul>
+    <span class="toc-header">Namespaces</span>
+    <ul id="left-sidebar-list">
+      <li><a href="fenrir-api.html" class="wiki_link">fenrir</a></li>
+    </ul>
+    
+    <a href="http://clojure.org" class="wiki_link">Clojure Home</a>
+  </div>
+</div>
+</div>
+      <div id="rightcolumn">
+	<div id="Content">
+	  <div class="contentBox"><div class="innerContentBox">
+              <div id="content_view" class="wiki wikiPage">
+                <div id="right-sidebar"><div id="toc">
+  <h1 class="nopad">Table of Contents</h1>
+  <div style="margin-left: 1em;" class="toc-section">
+    <a href="#toc0">Overview</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/base-ctor">base-ctor</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/base-get">base-get</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/base-set">base-set</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/call-base">call-base</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/ctor">ctor</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/defclass">defclass</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/fClass">fClass</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/fObject">fObject</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/get-slot">get-slot</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#fenrir/set-slot">set-slot</a>
+    </div>
+    <br />
+  </div>
+</div>
+</div>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">fenrir</span>
+  - <span id="header-project">fenrir</span> <span id="header-version"></span> (<span id="header-status"></span>)
+  </h1>
+
+<br />Usage:
+<pre>
+(ns your-namespace
+  (:require <span id="long-name">fenrir</span>))
+</pre><pre>
+</pre><h2>Overview</h2>
+<pre id="namespace-docstr">An alternative class-based object-system for Clojure based on hash-maps and multimethods.</pre>
+
+
+<br />
+<h2>Public Variables and Functions</h2>
+<div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/base-ctor">base-ctor</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">The base (fObject's) ctor.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L233" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/base-get">base-get</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">The base (fObject's) accessor/getter.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L236" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/base-set">base-set</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">The base (fObject's) mutator/setter.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L239" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/call-base">call-base</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (call-base meth base obj &amp; args)
+</pre>
+  <pre id="var-docstr">Invokes a base class' implementation of a method with the given arguments.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L242" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/ctor">ctor</h2>
+  <span id="var-type">multimethod</span><br />
+  <pre id="var-usage">No usage documentation available</pre>
+  <pre id="var-docstr">A fn that works as a constructor for fobjects.
+It can be extended to provide custom constructors.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L206" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/defclass">defclass</h2>
+  <span id="var-type">macro</span><br />
+  <pre id="var-usage">Usage: (defclass sym supers slots &amp; meths)
+</pre>
+  <pre id="var-docstr">Creates an fClass meta-object for creating fobjects.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L84" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/fClass">fClass</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">The type of all Fenrir fclasses.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L43" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/fObject">fObject</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">The base fobject class.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L47" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/get-slot">get-slot</h2>
+  <span id="var-type">multimethod</span><br />
+  <pre id="var-usage">No usage documentation available</pre>
+  <pre id="var-docstr">A fn for getting a slot in an fobject.
+It can be extended to create accessors/getters.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L219" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="fenrir/set-slot">set-slot</h2>
+  <span id="var-type">multimethod</span><br />
+  <pre id="var-usage">No usage documentation available</pre>
+  <pre id="var-docstr">A fn for setting a slot in an fobject.
+It can be extended to create mutators/setters.</pre>
+  
+  
+  <a href="http://github.com/eduardoejp/fenrir/blob/8789fabb3d8c4787d3063f003640feaea9cfe29e/src/fenrir.clj#L225" id="var-source">Source</a>
+</div>
+
+
+</div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<div id="foot">
+	  <div style="text-align: center;" id="copyright">Copyright 2011 Eduardo Julian</div>
+	</div>
+      </div>
+      <div id="DesignedBy">Logo &amp; site design by <a title="Visit Tom Hickey's website." href="http://www.tomhickey.com">Tom Hickey</a>.<br />
+      Clojure auto-documentation system by Tom Faulhaber.</div>
+    </div>
+    <!-- /AllContentContainer -->
+  </body>
+
+</html>
