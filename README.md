@@ -39,11 +39,7 @@ Examples
 	  (get area (* Math/PI (* radius radius)))
 	  (get perimeter (* Math/PI (get-slot *self* :diameter))))
 
-This code illustrates some of the features of Fenrir:
-* Slots
-* Virtual Slots
-* Inheritance (which can be multiple)
-* Polymorphism
+This code illustrates some of the features of Fenrir: Slots, Virtual Slots, Inheritance (which can be multiple) & Polymorphism
 
 Before I explain each feature, please evaluate the following sexps:
 
@@ -63,7 +59,9 @@ Before I explain each feature, please evaluate the following sexps:
 	(get-slot cir :perimeter)
 
 1. Slots in Fenrir can come in two forms: Normal Slots & Virtual Slots
+
 *Normal Slots*: These are instance variables in your object. They can be called by name inside method definitions and inside getters, setters and virtual slot definitions.
+
 *Virtual Slots*: These can be accessed like every other slot by outside users (although they cannot be called by name inside definitions). If someone tries to set them
   to a value through set-slot, they won't be able to and set-slot will return the original object. Accessing them through get-slot will result in the forms being
   evaluated and returning a value
@@ -76,7 +74,7 @@ Before I explain each feature, please evaluate the following sexps:
 Instantiation is done through the ctor method (which can be overwritten to create custom constructors). The get-slot method provides access (getters are created
   through the 'get' "special form"). The set-slot method provides mutation (setters are created through the 'set' "special form").
 The default ctor implementation takes the object's slots as :keywords.
-The *self* variable refers to the object (like 'this' in Java) inside method definitions, getters & setters.
+The `*self*` variable refers to the object (like 'this' in Java) inside method definitions, getters & setters.
 
 Another example will help illustrate more features of Fenrir:
 
@@ -126,14 +124,14 @@ Here we can see method definitions, getters & setters, multiple inheritance, slo
 1. Method Definitions: When provided only the method name or the name and a docstring, the method will be defined and the base implementation will throw an exception.
   When provided a definition, the method will be declared with that base definition.
   When implementing in a class an already existing method, a new implementation will be added for that class.
-2. Mutators/Setters: They will be invoked upon calls to set-slot. They can have access to the value they are given via *val*.
+2. Mutators/Setters: They will be invoked upon calls to set-slot. They can have access to the value they are given via `*val*`.
   Their returning value will become the new value of the slot.
 3. Multiple Inheritance: When 2 or more slots or virtual slots with the same name are being inherited from 2 or more different sources, the defclass macro will throw
   an exception. The slot will have to be declared in the inheriting class (as can be seen in fRoboDog). However, if you still wish to use the get/set implementation
   of the slot, you have to "mask it" with the 'mask' special form. It takes an slot, a virtual slot or a method and redirects calls to them to the given superclass'
   implementation. That way, you can derive functionality in whatever way you like from multiple superclasses' implementations without having to worry about the order
   of inheritance and stuff like that.
-4. Constructor Definition: You define a constructor through the 'ctor' special form. It will always take an implicit *fclass* argument.
+4. Constructor Definition: You define a constructor through the 'ctor' special form. It will always take an implicit `*fclass*` argument.
   Having a constructor allows you to transform the input or validate it when creating your object. After that, you can call base-class to invoke fObject's
   ctor implementation.
 
