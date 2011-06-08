@@ -64,11 +64,13 @@ Before I explain each feature, please evaluate the following sexps:
 
 *Virtual Slots*: These can be accessed like every other slot by outside users (although they cannot be called by name inside definitions). If someone tries to set them
   to a value through set-slot, they won't be able to and set-slot will return the original object. Accessing them through get-slot will result in the forms being
-  evaluated and returning a value
+  evaluated and returning a value.
+
 2. Inheritance (can be multiple): All the fclasses that are being inherited must be namespace qualified. The subclass will then inherit all the normal and virtual slots
    from its base classes, along with all the methods. When two or more slots or virtual slots with the same name are being inherited by a class from its superclasses,
    an exception will be thrown by the defclass macro. The way to solve that problem is by declaring the inherited slot in the subclass and, if desired,
    "masking" the parent functionality in the child class (details on how to mask will be given later).
+
 3. Polymorphism: There can be polymorphism with methods, getters (for either normal or virtual slots) and setters (only for normal slots).
 
 Instantiation is done through the ctor method (which can be overwritten to create custom constructors). The get-slot method provides access (getters are created
