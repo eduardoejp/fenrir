@@ -1,6 +1,6 @@
 ;; Copyright (C) 2011, Eduardo Julián. All rights reserved.
 ;;
-;; The use and distribution terms for this software are covered by the 
+;; The use and distribution terms for this software are covered by the
 ;; Eclipse Public License 1.0
 ;; (http://opensource.org/licenses/eclipse-1.0.php) which can be found
 ;; in the file epl-v10.html at the root of this distribution.
@@ -84,7 +84,9 @@
 (defmacro defclass
   "Creates an fClass meta-object for creating fobjects."
   [sym supers slots & meths]
-  (let [; Extract the doc-string
+  (let [; Namespace any un-namespaced supers to *ns*
+        supers (map #(if (namespace %) % (add-ns %)) supers)
+        ; Extract the doc-string
         doc-str (when (string? (first meths)) (first meths))
         meths (if (string? (first meths)) (rest meths) meths)
         ; Complete the set of slots for the meta-object.
