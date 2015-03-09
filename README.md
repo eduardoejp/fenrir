@@ -29,12 +29,12 @@ Examples
 	(defclass fShape [] []
 	  (get area -1)
 	  (get perimeter -1))
-	
-	(defclass fSquare [user/fShape] [side]
+
+	(defclass fSquare [fShape] [side]
 	  (get area (* side side))
 	  (get perimeter (* side 4)))
-	
-	(defclass fCircle [user/fShape] [radius]
+
+	(defclass fCircle [fShape] [radius]
 	  (get diameter (* radius 2))
 	  (get area (* Math/PI (* radius radius)))
 	  (get perimeter (* Math/PI (get-slot *self* :diameter))))
@@ -78,9 +78,9 @@ Another example will help illustrate more features of Fenrir:
 
 	(defclass fPet [] [name age owner]
 	  "A pet of any kind."
-	  (make-noise "Make some pet noise."))
+	  (make-noise [] "Make some pet noise."))
 
-	(defclass fDog [fenrir/fPet] []
+	(defclass fDog [fPet] []
 	  "A dog of any race."
 	  (set age (if (< *val* 15) *val* -1)) ; If the dog is too old, put it to sleep...
 	  (get name (str owner "'s dog, " name))
@@ -91,12 +91,12 @@ Another example will help illustrate more features of Fenrir:
 	  (get name (str name ", Copyright (C) " manufacturer " 2011"))
 	  (explode [] (println "BOOM!")))
 
-	(defclass fRoboDog [fenrir/fDog fenrir/fMachine] [name]
+	(defclass fRoboDog [fDog fMachine] [name]
 	  "fDog 2.0"
 	  (ctor [name age owner manufacturer]
 	    (base-ctor *fclass* :name name :age age :owner owner :manufacturer manufacturer))
 	  (make-noise [] (println "*Buzz* Bark! *Buzz*"))
-	  (mask name fenrir/fMachine))
+	  (mask name fMachine))
 
 Before explaining everything, try this:
 
